@@ -150,6 +150,8 @@ GitHub does not support account-password authentication for Git operations over 
 
 See [[GitHub CLI]] for more details.
 
+The authentication method used by Git depends on the remote URL: an SSH remote uses an SSH key, while an HTTPS remote uses a PAT or a credential helper. See [[GitHub SSH vs HTTPS Authentication]] for the distinction.
+
 Install GitHub CLI and authenticate:
 
 ```bash
@@ -157,7 +159,7 @@ brew install gh
 gh auth login
 ```
 
-A typical authentication configuration is **GitHub.com → HTTPS → Login with a web browser**.
+A typical GitHub CLI configuration is **GitHub.com → HTTPS → Login with a web browser**. Here, HTTPS is the Git protocol; the browser is used to authorize GitHub CLI.
 
 The device authentication code is displayed in the Terminal rather than being sent by email or SMS.
 
@@ -167,7 +169,7 @@ Authentication can be checked with:
 gh auth status
 ```
 
-If Git is not using the GitHub CLI credentials correctly:
+If the repository uses an HTTPS remote and Git is not using the GitHub CLI credentials correctly:
 
 ```bash
 gh auth setup-git
@@ -517,3 +519,4 @@ git push
 ## 19. Related Notes
 
 - [[GitHub CLI]]
+- [[GitHub SSH vs HTTPS Authentication]]

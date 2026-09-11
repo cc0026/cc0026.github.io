@@ -15,6 +15,8 @@ and other topics I am learning.
 - [[Hysteresis]]
 - [[Differential Scanning Calorimetry]]
 - [[GitHub CLI]]
+- [[GitHub Repository Workflow]]
+- [[GitHub SSH vs HTTPS Authentication]]
 - [[Quartz Installation and Deployment]]
 
 ## Recent Notes
@@ -23,4 +25,6 @@ and other topics I am learning.
 - [[Hysteresis]]
 - [[Differential Scanning Calorimetry]]
 - [[GitHub Fork Workflow]]
+- [[GitHub Repository Workflow]]
+- [[GitHub SSH vs HTTPS Authentication]]
 - [[Quartz Installation and Deployment]]

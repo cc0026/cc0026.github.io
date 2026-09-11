@@ -4,6 +4,8 @@ GitHub CLI (`gh`) is the official command-line interface for GitHub. It allows G
 
 Official website: https://cli.github.com/
 
+For the difference between SSH and HTTPS repository authentication, see [[GitHub SSH vs HTTPS Authentication]].
+
 ## 2. Installation
 
 On macOS, GitHub CLI can be installed using Homebrew:
@@ -22,7 +24,7 @@ gh --version
 
 GitHub no longer supports password authentication for Git operations over HTTPS. GitHub CLI provides a convenient way to authenticate Git and other GitHub operations.
 
-Start authentication with:
+Start the interactive authentication flow with:
 
 ```bash
 gh auth login
@@ -36,6 +38,13 @@ HTTPS
 Login with a web browser
 ```
 
+The protocol can also be selected explicitly:
+
+```bash
+gh auth login --git-protocol https
+gh auth login --git-protocol ssh
+```
+
 GitHub CLI will display a one-time code in the terminal:
 
 ```text
@@ -45,6 +54,8 @@ First copy your one-time code: XXXX-XXXX
 The code is **not sent by email or SMS**.
 
 Copy this code and enter it on the GitHub device authorization page opened in the browser.
+
+In the first setup, **HTTPS** is the Git protocol selected for repository operations. The browser is only used to authorize GitHub CLI; this does not mean that Git uses the GitHub account password.
 
 After authorization, check the authentication status:
 
@@ -56,11 +67,13 @@ A successful login should show that the current GitHub account is authenticated.
 
 ## 4. Git Authentication
 
-GitHub CLI can also configure Git to use the GitHub CLI credentials:
+If the repository uses an HTTPS remote, GitHub CLI can configure Git to use the GitHub CLI credential helper:
 
 ```bash
 gh auth setup-git
 ```
+
+This configures credential handling; it does not change an existing remote URL from HTTPS to SSH or from SSH to HTTPS.
 
 After authentication, normal Git commands can be used:
 
@@ -204,3 +217,4 @@ They are commonly used together.
 ## 7. Related Notes
 
 - [[Quartz Installation and Deployment]]
+- [[GitHub SSH vs HTTPS Authentication]]

@@ -2,6 +2,8 @@
 
 This workflow applies when you fork an open-source project, such as PyElastica or SophT, make local changes, push them to your own fork, and continue receiving updates from the original repository.
 
+This note uses SSH remote URLs by default. For the distinction between SSH keys, HTTPS, PATs, and GitHub CLI credentials, see [[GitHub SSH vs HTTPS Authentication]].
+
 ### 1.1 SSH over Port 443
 
 If a proxy such as Clash prevents ordinary SSH connections to GitHub, configure SSH to use GitHub's port 443 endpoint by adding the following block to `~/.ssh/config`:
@@ -30,17 +32,19 @@ Hi <username>! You've successfully authenticated...
 
 ### 1.2 HTTPS with a Personal Access Token
 
-If SSH is not suitable, use HTTPS with a **Personal Access Token (PAT)**. GitHub does not accept an account password for Git operations over HTTPS.
+If SSH is not suitable, use an HTTPS remote with a **Personal Access Token (PAT)** or configure GitHub CLI as the credential helper. GitHub does not accept an account password for Git operations over HTTPS.
 
-Create a token through **GitHub → Settings → Developer settings → Personal access tokens**. For a classic token, select the `repo` scope when the workflow requires repository access. Copy the token when it is created.
+Create a token through **GitHub → Settings → Developer settings → Personal access tokens**. Prefer a fine-grained PAT with the minimum required repository permissions. Use a classic token with the `repo` scope only when the workflow requires it. Copy the token when it is created.
 
 When Git asks for a password during `push`, paste the token. Nothing appears on screen while it is being pasted; this is normal.
 
-On macOS, store the credential in Keychain:
+When entering a PAT directly, store the credential in the macOS Keychain:
 
 ```bash
 git config --global credential.helper osxkeychain
 ```
+
+If you use GitHub CLI instead, run `gh auth login --git-protocol https` followed by `gh auth setup-git`. These commands manage HTTPS credentials but do not change the remote URL.
 
 ## 2. Fork the Repository on GitHub
 
@@ -68,6 +72,8 @@ git remote add upstream git@github.com:GazzolaLab/PyElastica.git
 # Verify both remotes
 git remote -v
 ```
+
+The commands below use SSH URLs. To use HTTPS instead, replace `git@github.com:OWNER/REPOSITORY.git` with `https://github.com/OWNER/REPOSITORY.git` and use the matching credential method.
 
 The remote list should include entries similar to:
 
@@ -225,3 +231,4 @@ The fork-side branch is `main` in this workflow. The upstream branch name is con
 ## 9. Related Notes
 
 - [[GitHub CLI]]
+- [[GitHub SSH vs HTTPS Authentication]]
