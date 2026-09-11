@@ -1,36 +1,18 @@
-Quartz is a static site generator designed for publishing Markdown-based notes and digital gardens.
+Quartz is a static site generator for publishing Markdown-based notes as a website or digital garden. It supports features such as WikiLinks, backlinks, search, tags, and graph view.
 
-It can convert local Markdown notes into a website with features such as WikiLinks, backlinks, search, tags, and graph view.
-
-Official website: https://quartz.jzhao.xyz/
+Official documentation: https://quartz.jzhao.xyz/
 
 ## Workflow
 
-The workflow used here is:
+The complete publishing workflow is:
 
-```text
-Markdown Files
-  ↓
-Quartz
-  ↓
-Local Preview
-  ↓
-GitHub
-  ↓
-GitHub Actions
-  ↓
-GitHub Pages
-  ↓
-Public Blog
-```
+**Markdown → Quartz → Local Preview → GitHub → GitHub Actions → GitHub Pages**
+
+Markdown files are the source content. Quartz converts them into a static website, while GitHub Pages hosts the generated website publicly.
 
 ## Requirements
 
-Quartz requires:
-
-- Node.js
-- npm
-- Git
+Quartz requires **Node.js**, **npm**, and **Git**.
 
 Check whether they are installed:
 
@@ -40,46 +22,21 @@ npm -v
 git --version
 ```
 
-On macOS, they can be installed using Homebrew:
-
-```bash
-brew install node
-brew install git
-```
+On macOS, Node.js and Git can be installed using Homebrew if necessary.
 
 ## Install Quartz
 
-Go to the directory where the website will be stored:
+Clone Quartz, install the dependencies, and initialize the website:
 
 ```bash
 cd ~/Documents
-```
-
-Clone Quartz:
-
-```bash
 git clone https://github.com/jackyzha0/quartz.git
-```
-
-Enter the directory:
-
-```bash
 cd quartz
-```
-
-Install dependencies:
-
-```bash
 npm install
-```
-
-Initialize Quartz:
-
-```bash
 npx quartz create
 ```
 
-The resulting directory contains files such as:
+The main directory structure is:
 
 ```text
 quartz/
@@ -90,21 +47,11 @@ quartz/
 └── package.json
 ```
 
-The most important directory for normal use is:
-
-```text
-content/
-```
-
-Markdown files placed here become pages on the website.
+For normal writing, the most important directory is `content/`. Markdown files placed inside this directory become pages on the website.
 
 ## Create the Homepage
 
-Create:
-
-```text
-content/index.md
-```
+The homepage is defined by `content/index.md`.
 
 For example:
 
@@ -120,155 +67,107 @@ Welcome to my personal knowledge blog.
 - [[GitHub]]
 ```
 
-`index.md` is the homepage of the Quartz website.
-
-If it is missing or unavailable, opening the root URL may result in a `404` page.
-
-## Local Preview
-
-From the Quartz directory:
-
-```bash
-npx quartz build --serve
-```
-
-Quartz will normally serve the website at:
-
-```text
-http://localhost:8080
-```
-
-This is only a **local preview**.
-
-```text
-localhost
-     ↓
-only accessible from the local computer
-```
-
-It is not yet a publicly deployed website.
+If `content/index.md` is missing, opening the root of the Quartz website may result in a 404 page.
 
 ## Add Markdown Notes
 
-Quartz uses Markdown files as its content input.
+Notes can be organized into folders inside `content/`.
 
-Place Markdown files inside the `content/` directory. For example:
-
-```text
-Quartz
-└── content/
-    └── Materials Science/
-        └── Transformation Stress.md
-```
-
-A useful structure might be:
+For example:
 
 ```text
 content/
 ├── index.md
 ├── Materials Science/
+│   ├── Shape Memory Alloys.md
+│   └── Ferroelectric Materials.md
 ├── Machine Learning/
+│   └── Random Forest.md
 ├── GitHub/
+│   ├── GitHub CLI.md
+│   └── GitHub Pages.md
 └── Paper Notes/
 ```
 
-Markdown files can be created or edited with any Markdown-compatible editor. Once placed inside `content/`, Quartz can convert them into website pages.
+Quartz supports WikiLinks between notes. For example, `[[GitHub CLI]]` creates a link to the corresponding note.
+
+## Local Preview
+
+Start the local Quartz server with:
+
+```bash
+cd ~/Documents/quartz
+npx quartz build --serve
+```
+
+The website is normally available at `http://localhost:8080`.
+
+This is only a **local preview**. It is useful for checking formatting, WikiLinks, navigation, graph view, and other website features before publishing.
 
 ## Create a GitHub Repository
 
-To publish the website, create a repository on GitHub.
+For a personal GitHub Pages website, create a repository named:
 
-For a personal website, the repository can be named:
+`USERNAME.github.io`
 
-```text
-USERNAME.github.io
-```
+For example:
 
-This gives a public URL such as:
+`cc0026.github.io`
 
-```text
-https://USERNAME.github.io/
-```
+This gives the website address:
 
-Alternatively, a repository can have a project name such as:
+`https://USERNAME.github.io/`
 
-```text
-notes
-```
+A normal project repository such as `notes` can also be used, but its GitHub Pages address normally includes the repository name.
 
-which normally produces:
+For a personal knowledge website, `USERNAME.github.io` provides the simpler structure.
 
-```text
-https://USERNAME.github.io/notes/
-```
+## Connect Quartz to GitHub
 
-## Connect Quartz to the GitHub Repository
-
-Because Quartz was cloned from the official Quartz repository, first check the existing remote:
+Because Quartz was cloned from the official Quartz repository, first check its current remote:
 
 ```bash
 git remote -v
 ```
 
-It may still point to:
-
-```text
-https://github.com/jackyzha0/quartz.git
-```
-
-Remove the existing `origin`:
+If `origin` still points to the official `jackyzha0/quartz` repository, replace it with the personal repository:
 
 ```bash
 git remote remove origin
-```
-
-Add the personal repository:
-
-```bash
 git remote add origin https://github.com/USERNAME/USERNAME.github.io.git
+git remote -v
 ```
 
-Check again:
+For example:
 
 ```bash
-git remote -v
+git remote add origin https://github.com/cc0026/cc0026.github.io.git
 ```
 
 ## GitHub Authentication
 
-GitHub does not support account-password authentication for Git operations over HTTPS.
+GitHub does not support account-password authentication for Git operations over HTTPS. GitHub CLI can be used for authentication.
 
-GitHub CLI can be used instead.
+See [[GitHub CLI]] for more details.
 
-See [[GitHub CLI]].
-
-Install it with:
+Install GitHub CLI and authenticate:
 
 ```bash
 brew install gh
-```
-
-Authenticate:
-
-```bash
 gh auth login
 ```
 
-A common configuration is:
+A typical authentication configuration is **GitHub.com → HTTPS → Login with a web browser**.
 
-```text
-GitHub.com
-HTTPS
-Login with a web browser
-```
+The device authentication code is displayed in the Terminal rather than being sent by email or SMS.
 
-Check authentication:
+Authentication can be checked with:
 
 ```bash
 gh auth status
 ```
 
-If necessary, configure Git to use GitHub CLI credentials:
+If Git is not using the GitHub CLI credentials correctly:
 
 ```bash
 gh auth setup-git
@@ -276,126 +175,189 @@ gh auth setup-git
 
 ## Push Quartz to GitHub
 
-Stage the files:
+For the first push:
 
 ```bash
 git add .
-```
-
-Create a commit:
-
-```bash
 git commit -m "Initial Quartz blog"
-```
-
-Set the main branch:
-
-```bash
 git branch -M main
-```
-
-Push:
-
-```bash
 git push -u origin main
 ```
 
-At this point, the Quartz source files are stored on GitHub.
+At this point, the **Quartz source repository** is stored on GitHub.
 
-However, uploading the repository is **not the same as deploying the website**.
+However:
+
+**Pushing Quartz to GitHub is not the same as deploying the website.**
+
+GitHub Pages still needs to receive the static website generated by Quartz.
 
 ## Configure Quartz
 
-Website settings are primarily stored in:
+The main website configuration is stored in `quartz.config.ts`.
 
-```text
-quartz.config.ts
-```
-
-For example, change the website title:
+For example:
 
 ```ts
 pageTitle: "My Notes",
 ```
 
-For a personal GitHub Pages website:
-
-```text
-https://USERNAME.github.io/
-```
-
-set:
+For a personal GitHub Pages website at `https://USERNAME.github.io/`, set:
 
 ```ts
 baseUrl: "USERNAME.github.io",
 ```
 
-The protocol `https://` should not be included in `baseUrl`.
+For example:
+
+```ts
+baseUrl: "cc0026.github.io",
+```
+
+Do not include `https://` in `baseUrl`.
+
+After changing the configuration:
+
+```bash
+git add .
+git commit -m "Configure Quartz"
+git push
+```
 
 ## Deploy with GitHub Pages
 
-GitHub Pages hosts the generated static website.
+The correct deployment process is:
 
-The deployment pipeline is:
+**`main` → GitHub Actions → Quartz Build → `public/` → GitHub Pages**
 
-```text
-Markdown
-   ↓
-Quartz
-   ↓
-GitHub Actions
-   ↓
-Build website
-   ↓
-GitHub Pages
+This distinction is important. GitHub Pages should host the website **after Quartz has built it**, rather than attempting to interpret the Quartz source repository directly.
+
+In the GitHub repository, open **Settings → Pages → Build and deployment** and set **Source** to **GitHub Actions**.
+
+Do not use **Deploy from a branch** for this setup.
+
+### GitHub Pages Workflow
+
+The upstream Quartz repository contains several workflows under `.github/workflows/`. These workflows are not necessarily intended for deploying a personal Quartz website.
+
+For example, the Quartz 5 source repository may contain `deploy-v5.yaml`. This workflow should not automatically be treated as the deployment workflow for a personal GitHub Pages site.
+
+Create a dedicated workflow:
+
+`.github/workflows/deploy-pages.yaml`
+
+with:
+
+```yaml
+name: Deploy Quartz to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Quartz plugins
+        run: npx quartz plugin install
+
+      - name: Build Quartz
+        run: npx quartz build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 ```
 
-In the GitHub repository, go to:
+Commit the workflow:
 
-```text
-Settings
-→ Pages
+```bash
+git add .github/workflows/deploy-pages.yaml
+git commit -m "Add GitHub Pages deployment"
+git push
 ```
-
-Under **Build and deployment**, select:
-
-```text
-Source
-→ GitHub Actions
-```
-
-Quartz uses a GitHub Actions workflow to build and deploy the website.
-
-Because the recommended workflow can change between Quartz versions, use the current Quartz documentation when configuring it:
-
-https://quartz.jzhao.xyz/hosting
 
 ## Check Deployment
 
-Open the repository's:
+Open **GitHub Repository → Actions** and find **Deploy Quartz to GitHub Pages**.
 
-```text
-Actions
-```
+A successful deployment should complete two main jobs:
 
-section.
+**Build → Deploy**
 
-A successful deployment should show the build/deployment workflow completing successfully.
+The build job converts the Markdown and Quartz source into the static website stored in `public/`. The deploy job publishes that directory to GitHub Pages.
+
+After deployment succeeds, the website should be available at:
+
+`https://USERNAME.github.io/`
 
 For example:
 
-```text
-Build   ✓
-Deploy  ✓
+`https://cc0026.github.io/`
+
+## Updating the Blog
+
+After the initial setup, publishing new notes is much simpler.
+
+Add or edit Markdown files in `content/`. If desired, preview the changes locally with `npx quartz build --serve`.
+
+Then publish:
+
+```bash
+git add .
+git commit -m "Update notes"
+git push
 ```
 
-The website can then be accessed at:
+Because the deployment workflow monitors pushes to `main`, `git push` automatically triggers a new Quartz build and GitHub Pages deployment.
 
-```text
-https://USERNAME.github.io/
-```
+The normal workflow therefore becomes:
 
-Unlike `localhost`, this address can be shared with other people.
+**Edit Markdown → Local Preview (optional) → Commit → Push → Automatic Deployment**
 
 ## Local Preview vs Public Deployment
 
@@ -405,72 +367,127 @@ Unlike `localhost`, this address can be shared with other people.
 | Accessible by others | No | Yes |
 | Requires local server | Yes | No |
 | Available when computer is off | No | Yes |
-| Purpose | Testing | Publication |
+| Main purpose | Testing | Publication |
 
-## Updating the Blog
+## Troubleshooting
 
-After the initial deployment, adding a new note is much simpler.
+### Homepage Shows 404
 
-Create or copy a Markdown file into:
+Check that `content/index.md` exists.
 
-```text
-content/
-```
-
-Preview locally:
+Then restart the local server:
 
 ```bash
 npx quartz build --serve
 ```
 
-Then publish the changes:
+### Git Push Authentication Error
+
+If Git reports:
+
+> Invalid username or token. Password authentication is not supported for Git operations.
+
+authenticate with GitHub CLI:
 
 ```bash
-git add .
-git commit -m "Update notes"
-git push
+gh auth login
+gh auth status
 ```
 
-GitHub Actions will rebuild and redeploy the website automatically.
-
-Therefore, the normal publishing workflow becomes:
-
-```text
-Markdown File
-  ↓
-content/
-  ↓
-Local Preview
-  ↓
-git add
-  ↓
-git commit
-  ↓
-git push
-  ↓
-GitHub Actions
-  ↓
-Public Blog Updated
-```
-
-## Common Commands
-
-Start local preview:
+If necessary:
 
 ```bash
-npx quartz build --serve
+gh auth setup-git
 ```
 
-Check repository status:
+### GitHub Pages Is Running Jekyll
+
+If a GitHub Actions log contains `GitHub Pages: jekyll` or `jekyll-theme-primer`, GitHub Pages is trying to process the Quartz source repository directly as a Jekyll website.
+
+This is **not a normal first-deployment step for Quartz**.
+
+Check **Settings → Pages → Build and deployment → Source** and make sure it is set to **GitHub Actions**.
+
+Also make sure `.github/workflows/deploy-pages.yaml` exists.
+
+The intended process is:
+
+**Quartz → GitHub Actions → Quartz Build → `public/` → GitHub Pages**
+
+rather than:
+
+**Quartz Source → Jekyll → Error**
+
+### `deploy-v5.yaml` Does Not Deploy the Website
+
+The upstream Quartz repository may contain `.github/workflows/deploy-v5.yaml`, but this does not mean it is intended for the personal website.
+
+For example, a workflow may contain conditions such as:
+
+```yaml
+branches:
+  - v5
+```
+
+and:
+
+```yaml
+if: ${{ github.repository == 'jackyzha0/quartz' }}
+```
+
+The latter means that the job only runs for the official `jackyzha0/quartz` repository.
+
+The workflow may also deploy to **Cloudflare Pages** rather than GitHub Pages.
+
+Therefore, use the dedicated `deploy-pages.yaml` workflow for the personal GitHub Pages site.
+
+### Deployment Workflow Does Not Run
+
+Check the current branch:
 
 ```bash
+git branch
 git status
 ```
 
-Check remote repository:
+The deployment workflow shown above listens for pushes to `main`.
+
+Also check recent commits:
+
+```bash
+git log --oneline -5
+```
+
+### Wrong Git Remote
+
+Check:
 
 ```bash
 git remote -v
+```
+
+The remote should point to the personal repository rather than the upstream Quartz repository.
+
+For example:
+
+`https://github.com/cc0026/cc0026.github.io.git`
+
+## Common Commands
+
+For normal use, only a few commands are needed.
+
+Local preview:
+
+```bash
+npx quartz build --serve
+```
+
+Check Git and GitHub status:
+
+```bash
+git status
+git remote -v
+gh auth status
 ```
 
 Publish changes:
@@ -481,10 +498,20 @@ git commit -m "Update notes"
 git push
 ```
 
-Check GitHub authentication:
+## Final Workflow
+
+After the initial configuration, Quartz does not require manually rebuilding and uploading the website for every update.
+
+The normal publishing cycle is:
+
+**Write Markdown → Preview → `git push` → GitHub Actions → GitHub Pages**
+
+In practice, publishing a new version usually requires only:
 
 ```bash
-gh auth status
+git add .
+git commit -m "Update notes"
+git push
 ```
 
 ## Related Notes
