@@ -1,8 +1,10 @@
+## 1. Overview
+
 GitHub CLI (`gh`) is the official command-line interface for GitHub. It allows GitHub authentication and many common GitHub operations to be performed directly from the terminal.
 
 Official website: https://cli.github.com/
 
-## Installation
+## 2. Installation
 
 On macOS, GitHub CLI can be installed using Homebrew:
 
@@ -16,7 +18,7 @@ Check whether it is installed correctly:
 gh --version
 ```
 
-## Authentication
+## 3. Authentication
 
 GitHub no longer supports password authentication for Git operations over HTTPS. GitHub CLI provides a convenient way to authenticate Git and other GitHub operations.
 
@@ -52,7 +54,7 @@ gh auth status
 
 A successful login should show that the current GitHub account is authenticated.
 
-## Git Authentication
+## 4. Git Authentication
 
 GitHub CLI can also configure Git to use the GitHub CLI credentials:
 
@@ -70,9 +72,9 @@ git push
 
 GitHub CLI handles the authentication in the background.
 
-## Common Commands
+## 5. Common Commands
 
-### Authentication
+### 5.1 Authentication
 
 Check the current authentication status:
 
@@ -98,7 +100,7 @@ Switch between authenticated accounts:
 gh auth switch
 ```
 
-### Repository
+### 5.2 Repository
 
 Create a repository:
 
@@ -124,7 +126,7 @@ Open the current repository in a browser:
 gh repo view --web
 ```
 
-### Pull Requests
+### 5.3 Pull Requests
 
 List pull requests:
 
@@ -144,7 +146,7 @@ View a pull request:
 gh pr view
 ```
 
-### Issues
+### 5.4 Issues
 
 List issues:
 
@@ -158,7 +160,7 @@ Create an issue:
 gh issue create
 ```
 
-### GitHub Actions
+### 5.5 GitHub Actions
 
 List recent workflow runs:
 
@@ -172,7 +174,7 @@ View a workflow run:
 gh run view
 ```
 
-## `git` vs `gh`
+## 6. `git` vs `gh`
 
 `git` and `gh` serve different purposes.
 
@@ -199,11 +201,6 @@ gh
 
 They are commonly used together.
 
-## Related Notes
+## 7. Related Notes
 
-- [[Git]]
-- [[GitHub]]
-- [[Git Authentication]]
-- [[GitHub Pages]]
-- [[GitHub Actions]]
 - [[Quartz Installation and Deployment]]

@@ -11,13 +11,16 @@ and other topics I am learning.
 
 ## Topics
 
-- [[SMA]]
-- [[Ferroelectrics]]
-- [[Machine Learning]]
-- [[Paper Notes]]
+- [[Shape Memory Alloy]]
+- [[Hysteresis]]
+- [[Differential Scanning Calorimetry]]
+- [[GitHub CLI]]
+- [[Quartz Installation and Deployment]]
 
 ## Recent Notes
 
-- [[Transformation Stress]]
-- [[Transformation Strain]]
-- [[Processing Representation]]
+- [[Shape Memory Alloy]]
+- [[Hysteresis]]
+- [[Differential Scanning Calorimetry]]
+- [[GitHub Fork Workflow]]
+- [[Quartz Installation and Deployment]]
