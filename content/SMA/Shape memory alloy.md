@@ -1,4 +1,3 @@
-- - -
 ## Introduction
 
 In metallurgy, ~a shape-memory alloy (SMA) is an alloy that can be deformed when cold but returns to its pre-deformed ("remembered") shape when heated~. It is also known in other names such as memory metal, memory alloy, smart metal, smart alloy, and muscle wire. The "memorized geometry" can be modified by fixating the desired geometry and subjecting it to a thermal treatment, for example a wire can be taught to memorize the shape of a coil spring.
